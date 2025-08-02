@@ -1,7 +1,21 @@
-let computerScore = 0, humanScore = 0;
+const humanSpan = document.querySelector("#human-score");
+const computerSpan = document.querySelector("#computer-score");
+const score = document.querySelector("#score");
+const resetBtn = document.querySelector("#reset-btn");
+const menu = document.querySelector("#menu");
+
+let computerScore = 0;
+let humanScore = 0;
+let gameOver = false;
+const MAX_SCORE = 5;
+
 function getComputerChoice() {
     const choices = ["rock", "paper", "scissors"];
     return choices[Math.floor(Math.random() * choices.length)];
+}
+const updateScores = () => {
+    humanSpan.textContent = ` ${humanScore}`;
+    computerSpan.textContent = ` ${computerScore}`;
 }
 function playRound(computerChoice, humanChoice) {
         const winsAgainst = {
@@ -9,35 +23,48 @@ function playRound(computerChoice, humanChoice) {
             paper: "rock",
             scissors: "paper"
         }
-        if (humanChoice === computerChoice) return alert("Draw!");
+        if (humanChoice === computerChoice) {
+            score.textContent = "Draw";
+        }
         else if (winsAgainst[humanChoice] === computerChoice) {
             humanScore += 1;
-            alert("You won!");
+            score.textContent = "You win!";
         } 
         else {
             computerScore +=1;
-            alert("Computer won!") 
+            score.textContent = "You lose!";
         }
-
+        updateScores();
     }
-
 function checkGameOver() {
         if (humanScore > computerScore) {
-            alert("Congrats, you won the game!");
+            score.textContent = "You won the whole game!";
         } else if (computerScore > humanScore) {
-            alert("You lost the game :(");
+            score.textContent = "You lost the entire game :(";
         } else {
-            alert("It's a draw!");
+            score.textContent = "You draw the whole game!";
         }
-        
-        humanScore = 0;
-        computerScore = 0;
+        resetBtn.style.display = "inline-block";
+        gameOver = true;
     }    
-     
-const menu = document.querySelector("#menu");
+
 menu.addEventListener('click', (event) => {
+    if (gameOver) return;
+    
     const target = event.target;
     const humanChoice = target.id;
     playRound(getComputerChoice(), humanChoice);
-    if (computerScore === 5|| humanScore === 5) checkGameOver();
+    
+    if (computerScore >= MAX_SCORE || humanScore >= MAX_SCORE) {
+        checkGameOver();
+    }
+});
+
+resetBtn.addEventListener('click', () => {
+    gameOver = false;
+    computerScore = 0;
+    humanScore = 0;
+    updateScores();
+    score.textContent = "";
+    resetBtn.style.display = "none";
 })
