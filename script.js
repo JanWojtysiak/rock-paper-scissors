@@ -1,13 +1,9 @@
+let computerScore = 0, humanScore = 0;
 function getComputerChoice() {
     const choices = ["rock", "paper", "scissors"];
     return choices[Math.floor(Math.random() * choices.length)];
 }
-const getHumanChoice = () => prompt("Rock, paper, scissors?").toLowerCase();
-
-function playGame(){
-    let computerScore = 0, humanScore = 0;
-
-    function playRound(computerChoice, humanChoice) {
+function playRound(computerChoice, humanChoice) {
         const winsAgainst = {
             rock: "scissors",
             paper: "rock",
@@ -16,23 +12,32 @@ function playGame(){
         if (humanChoice === computerChoice) return alert("Draw!");
         else if (winsAgainst[humanChoice] === computerChoice) {
             humanScore += 1;
-            return alert("You won!");
+            alert("You won!");
         } 
         else {
             computerScore +=1;
-            return alert("Computer won!") 
+            alert("Computer won!") 
         }
-    }
-    for (let i = 0; i <5; i++) {
-        playRound(getComputerChoice(), getHumanChoice());
-    }
-    if (humanScore > computerScore) {
-    return alert("Congrats, you won the game!");
-    } else if (computerScore > humanScore) {
-        return alert("You lost the game :(");
-    } else {
-        return alert("It's a draw!");
-    }
-}
-playGame();
 
+    }
+
+function checkGameOver() {
+        if (humanScore > computerScore) {
+            alert("Congrats, you won the game!");
+        } else if (computerScore > humanScore) {
+            alert("You lost the game :(");
+        } else {
+            alert("It's a draw!");
+        }
+        
+        humanScore = 0;
+        computerScore = 0;
+    }    
+     
+const menu = document.querySelector("#menu");
+menu.addEventListener('click', (event) => {
+    const target = event.target;
+    const humanChoice = target.id;
+    playRound(getComputerChoice(), humanChoice);
+    if (computerScore === 5|| humanScore === 5) checkGameOver();
+})
