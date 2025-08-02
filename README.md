@@ -12,9 +12,14 @@ This is a learning project to practice **Git**. It will be improved over time.
 2. Enter your choice (`rock`, `paper`, or `scissors`) when prompted.
 3. Play 5 rounds and see who wins!
 
+👉 **[Live Preview](https://janwojtysiak.github.io/rock-paper-scissors/)**
+
+
 ## ⚙️ Tech
 
 - JavaScript
 - HTML (to run the script)
 
 Created for learning purposes — more features coming soon!
+
+
